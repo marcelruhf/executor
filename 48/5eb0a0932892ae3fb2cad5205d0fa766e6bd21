@@ -1,0 +1,28 @@
+packages/core/api/src/server/scoped-executor.ts
+  s_c61626052f8e2d::t_5437464c1fead3 48
+packages/core/api/src/server/oauth-origin.test.ts
+  s_c61626052f8e2d::t_fac55f5f001a19 3-8,12-19,22-28,35-58,60-72,75-80,82-103,106-112
+  s_c61626052f8e2d::t_9847446f4270bd 29-34,59,81
+packages/core/api/src/server/request-origin.ts
+  s_c61626052f8e2d::t_5437464c1fead3 1-46
+packages/core/api/src/server/execution-stack-middleware.ts
+  s_c61626052f8e2d::t_5437464c1fead3 62
+packages/core/api/src/server.ts
+  s_c61626052f8e2d::t_5437464c1fead3 83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "485eb0a0932892ae3fb2cad5205d0fa766e6bd21",
+  "prompts": {},
+  "sessions": {
+    "s_c61626052f8e2d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4938-712b-7102-a532-599d85ee9354",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
