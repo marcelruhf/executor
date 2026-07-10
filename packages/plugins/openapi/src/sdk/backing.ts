@@ -197,6 +197,7 @@ const toBinding = (def: ToolDefinition): OperationBinding =>
     parameters: [...def.operation.parameters],
     requestBody: def.operation.requestBody,
     responseBody: def.operation.responseBody,
+    ...(def.operation.requiredScopes ? { requiredScopes: def.operation.requiredScopes } : {}),
   });
 
 const descriptionFor = (def: ToolDefinition): string => {
@@ -731,11 +732,21 @@ export const invokeOpenApiBackedTool = (input: {
             ? detectInsufficientScope({ body: result.error, headers: result.headers })
             : null;
         if (insufficientScope) {
-          const required = insufficientScope.requiredScopes;
+          // Name the shortfall as precisely as the data allows: the scopes
+          // the upstream challenge asked for, else the scopes the operation
+          // declared in its spec (carried on the binding), plus what the
+          // connection's grant actually holds. Advisory only — the upstream
+          // made the call; this annotation tells the agent/user what to
+          // reconnect with.
+          const required =
+            insufficientScope.requiredScopes.length > 0
+              ? insufficientScope.requiredScopes
+              : (binding.requiredScopes ?? []);
+          const granted = input.credential.grantedScopes;
           return openApiAuthToolFailure({
             code: "oauth_scope_insufficient",
             status: result.status,
-            message: `The connection "${input.credential.connection}" for "${integration}" is authorized, but its grant does not cover the scope this operation requires${required.length > 0 ? ` (${required.join(" ")})` : ""}. Re-authenticating with the same grant will return the same error; reconnect with broader access.`,
+            message: `The connection "${input.credential.connection}" for "${integration}" is authorized, but its grant${granted && granted.length > 0 ? ` (${granted.join(" ")})` : ""} does not cover the scope this operation requires${required.length > 0 ? ` (${required.join(" ")})` : ""}. Re-authenticating with the same grant will return the same error; reconnect with broader access.`,
             owner: input.credential.owner,
             integration,
             connection: String(input.credential.connection),

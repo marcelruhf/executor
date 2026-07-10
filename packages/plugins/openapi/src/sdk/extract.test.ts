@@ -88,3 +88,41 @@ describe("OpenAPI extract response bodies", () => {
     }),
   );
 });
+
+describe("OpenAPI extract required scopes", () => {
+  it.effect("unions per-operation security scopes and omits the field when none are declared", () =>
+    Effect.gen(function* () {
+      const doc = yield* parse(
+        JSON.stringify({
+          openapi: "3.0.3",
+          info: { title: "Scoped", version: "1.0.0" },
+          servers: [{ url: "https://api.example.com" }],
+          paths: {
+            "/files": {
+              get: {
+                operationId: "listFiles",
+                // Two requirement objects (alternative scheme combinations);
+                // the extracted field is their union.
+                security: [{ oauth: ["files.read"] }, { oauth: ["files.admin", "files.read"] }],
+                responses: { "200": { description: "ok" } },
+              },
+            },
+            "/public": {
+              get: {
+                operationId: "publicPing",
+                responses: { "200": { description: "ok" } },
+              },
+            },
+          },
+        }),
+      );
+
+      const result = yield* extract(doc);
+      const scoped = result.operations.find((op) => op.operationId === "listFiles");
+      expect(scoped?.requiredScopes).toEqual(["files.admin", "files.read"]);
+
+      const unscoped = result.operations.find((op) => op.operationId === "publicPing");
+      expect(unscoped?.requiredScopes, "no security declared, no field").toBeUndefined();
+    }),
+  );
+});

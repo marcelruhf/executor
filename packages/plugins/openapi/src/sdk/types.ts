@@ -180,6 +180,10 @@ export const ExtractedOperation = Schema.Struct({
   inputSchema: Schema.OptionFromOptional(Schema.Unknown),
   outputSchema: Schema.OptionFromOptional(Schema.Unknown),
   deprecated: Schema.Boolean,
+  /** OAuth scopes the operation declares via `security` (union across
+   *  requirement objects), so a connection's granted scope can be compared to
+   *  what the operation needs. Omitted when the spec declares none. */
+  requiredScopes: Schema.optional(Schema.Array(Schema.String)),
 });
 export type ExtractedOperation = typeof ExtractedOperation.Type;
 
@@ -204,6 +208,11 @@ export const OperationBinding = Schema.Struct({
   parameters: Schema.Array(OperationParameter),
   requestBody: Schema.OptionFromOptional(OperationRequestBody),
   responseBody: Schema.OptionFromOptional(OperationResponseBody),
+  /** Declared OAuth scopes (see ExtractedOperation.requiredScopes), persisted
+   *  with the binding so the invoke path can annotate a scope-insufficient
+   *  rejection with exactly what the operation needs. Optional so bindings
+   *  stored before this field existed keep decoding. */
+  requiredScopes: Schema.optional(Schema.Array(Schema.String)),
 });
 export type OperationBinding = typeof OperationBinding.Type;
 

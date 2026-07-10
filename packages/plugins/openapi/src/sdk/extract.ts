@@ -477,6 +477,29 @@ const operationServers = (
   return docServers;
 };
 
+/** OAuth scopes an operation declares via `security`, unioned across its
+ *  requirement objects (each object is one acceptable scheme combination; the
+ *  union is what "some grant satisfies this operation" can be checked
+ *  against). Operation-level `security` overrides the document default per
+ *  the spec, so no doc-level fallback is read here — the callers that need it
+ *  pass the operation as-is. Returns `undefined` when nothing is declared,
+ *  keeping the field absent for unauthenticated or scope-less operations. */
+const operationRequiredScopes = (operation: OperationObject): readonly string[] | undefined => {
+  const security = operation.security;
+  if (!Array.isArray(security) || security.length === 0) return undefined;
+  const scopes = new Set<string>();
+  for (const requirement of security) {
+    if (requirement === null || typeof requirement !== "object") continue;
+    for (const schemeScopes of Object.values(requirement)) {
+      if (!Array.isArray(schemeScopes)) continue;
+      for (const scope of schemeScopes) {
+        if (typeof scope === "string" && scope.trim().length > 0) scopes.add(scope);
+      }
+    }
+  }
+  return scopes.size > 0 ? [...scopes].sort() : undefined;
+};
+
 // ---------------------------------------------------------------------------
 // Main extraction
 // ---------------------------------------------------------------------------
@@ -512,6 +535,7 @@ export const extract = Effect.fn("OpenApi.extract")(function* (doc: ParsedDocume
       const tags = (operation.tags ?? []).filter((t) => t.trim().length > 0);
       const operationPathTemplate = explicitPathTemplate(operation) ?? pathTemplate;
 
+      const requiredScopes = operationRequiredScopes(operation);
       operations.push(
         ExtractedOperation.make({
           operationId: OperationId.make(deriveOperationId(method, pathTemplate, operation)),
@@ -528,6 +552,7 @@ export const extract = Effect.fn("OpenApi.extract")(function* (doc: ParsedDocume
           inputSchema: Option.fromNullishOr(inputSchema),
           outputSchema: Option.fromNullishOr(outputSchema),
           deprecated: operation.deprecated === true,
+          ...(requiredScopes ? { requiredScopes } : {}),
         }),
       );
     }
@@ -643,6 +668,7 @@ export const streamOperationBindings = <E, R>(
       const requestBody = extractRequestBody(ref.operation, r);
       const responseBody = extractResponseBody(ref.operation, r);
       const servers = operationServers(ref.pathItem, ref.operation, docServers);
+      const requiredScopes = operationRequiredScopes(ref.operation);
       chunk.push({
         toolName: plan.toolPath,
         description:
@@ -656,6 +682,7 @@ export const streamOperationBindings = <E, R>(
           parameters,
           requestBody: Option.fromNullishOr(requestBody),
           responseBody: Option.fromNullishOr(responseBody),
+          ...(requiredScopes ? { requiredScopes } : {}),
         }),
       });
       if (chunk.length >= chunkSize) {
@@ -773,6 +800,7 @@ export const streamOperationBindingsFromStructure = <E, R>(
         const requestBody = extractRequestBody(operation, r);
         const responseBody = extractResponseBody(operation, r);
         const servers = operationServers(pathItem, operation, docServers);
+        const requiredScopes = operationRequiredScopes(operation);
         chunk.push({
           toolName: plan.toolPath,
           description:
@@ -786,6 +814,7 @@ export const streamOperationBindingsFromStructure = <E, R>(
             parameters,
             requestBody: Option.fromNullishOr(requestBody),
             responseBody: Option.fromNullishOr(responseBody),
+            ...(requiredScopes ? { requiredScopes } : {}),
           }),
         });
         if (chunk.length >= chunkSize) {
