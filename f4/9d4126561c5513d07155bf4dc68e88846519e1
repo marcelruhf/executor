@@ -1,0 +1,19 @@
+.changeset/fix-loopback-oauth-callback.md
+  s_350ae2edc84263::t_47f6104d43fbea 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f49d4126561c5513d07155bf4dc68e88846519e1",
+  "prompts": {},
+  "sessions": {
+    "s_350ae2edc84263": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "",
+        "model": "unknown"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
