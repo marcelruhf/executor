@@ -1,0 +1,57 @@
+.changeset/fix-loopback-oauth-callback.md
+  s_c61626052f8e2d::t_a19df08e421d49 1-5
+apps/host-selfhost/src/auth/oauth-callback-login.test.ts
+  s_350ae2edc84263::t_78b3b999f18a3b 117-129
+  s_c61626052f8e2d::t_e91cae34b7f02c 3,5,7-9,11-12,14-58,60-74,76-87,89-92,94-99,104-113,130-141,143-161,163
+  s_c61626052f8e2d::t_9ed37adc8543a2 1,6,10,13,59,75,88,101,114,142,162
+  s_c61626052f8e2d::t_ac049a1168b396 100
+apps/host-selfhost/src/auth/oauth-callback-login.ts
+  s_c61626052f8e2d::t_9f68aa72eb81b7 1-2,13-23,26-27,32-40,44
+apps/host-selfhost/src/serve.ts
+  s_c61626052f8e2d::t_ac049a1168b396 32
+  s_c61626052f8e2d::t_9f68aa72eb81b7 47,56-58,60
+  s_350ae2edc84263::t_a3e53e8f46f33d 92
+  s_350ae2edc84263::t_77703c0aad8202 120
+packages/core/api/src/server/request-origin.ts
+  s_350ae2edc84263::t_ab286a68d36a04 3
+  s_c61626052f8e2d::t_9ed37adc8543a2 6-11,16-18,20,28-29
+apps/host-selfhost/src/app.ts
+  s_c61626052f8e2d::t_9f68aa72eb81b7 24,134,161,165-166
+e2e/selfhost/oauth-callback-loopback-alias.test.ts
+  s_350ae2edc84263::t_771cc1e7d97eda 293-295
+  s_c61626052f8e2d::t_bf048d1a81a1e6 4,19
+  s_c61626052f8e2d::t_3ba766c524239c 9
+  s_c61626052f8e2d::t_a19df08e421d49 1-3,6,8,10-18,20-98,135,137,146,153,162,166,179,191,200,204,228,254,266,272,304,309-311
+  s_350ae2edc84263::t_35e01c65ddc5d3 267
+  s_c61626052f8e2d::t_c589e06d87a3e1 114-134,136,138-145,147-152,154-161,163-165,167-178,180-190,192-199,201-203,205-227,229-253,255-265,268-271,273-289
+  s_c61626052f8e2d::t_c819efa6d5d34d 99-113,290-292,296-303
+  s_c61626052f8e2d::t_e86dee6b9b283f 7
+  s_c61626052f8e2d::t_610bb6af8be5b9 5
+  s_350ae2edc84263::t_db2de8be2e978e 305-308
+e2e/setup/selfhost.globalsetup.ts
+  s_c61626052f8e2d::t_a19df08e421d49 45-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "94fb7da85ccadb4dc5730246c52ed554b4fbb8aa",
+  "prompts": {},
+  "sessions": {
+    "s_350ae2edc84263": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "",
+        "model": "unknown"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    },
+    "s_c61626052f8e2d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4938-712b-7102-a532-599d85ee9354",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
