@@ -1,0 +1,19 @@
+e2e/selfhost/oauth-callback-loopback-alias.test.ts
+  s_c61626052f8e2d::t_f6d47e60c176ff 174-179
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5d8398bc5c26b84ee6db9f76ea86997446d40a23",
+  "prompts": {},
+  "sessions": {
+    "s_c61626052f8e2d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4938-712b-7102-a532-599d85ee9354",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
