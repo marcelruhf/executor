@@ -42,6 +42,7 @@ import { type AuthenticationInput } from "./types";
 import {
   addOpenApiTestConnection,
   makeOpenApiHttpApiTestIntegrationConfig,
+  makeOpenApiTestSpecJson,
   serveMutableOpenApiSpecTestServer,
   serveOpenApiHttpApiTestServer,
   unwrapInvocation,
@@ -599,6 +600,72 @@ describe("OpenAPI Plugin", () => {
     ),
   );
 
+  it.effect("rejects unknown args before raising the approval elicitation", () =>
+    Effect.scoped(
+      Effect.gen(function* () {
+        const server = yield* servePluginTestApi();
+        const executor = yield* createExecutor(makeTestConfig({ plugins: testPlugins() }));
+
+        const conn = yield* addOpenApiTestConnection(executor, server, { slug: "test" });
+        const calls = { count: 0 };
+        const failure = yield* executor
+          .execute(
+            conn.address("items.createItem"),
+            { body: { name: "New item" }, doesNotExist: "nope" },
+            {
+              onElicitation: () =>
+                Effect.sync(() => {
+                  calls.count++;
+                  return { action: "accept" as const, content: {} };
+                }),
+            },
+          )
+          .pipe(Effect.flip);
+
+        expect(calls.count).toBe(0);
+        expect(Predicate.isTagged(failure, "ToolInvocationError")).toBe(true);
+        // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: asserts the exact caller-facing message the pre-flight failure carries
+        const message = (failure as { message: string }).message;
+        expect(message).toContain('Unknown argument "doesNotExist".');
+        expect(message).toContain("This operation accepts:");
+        expect(message).toContain("body");
+      }),
+    ),
+  );
+
+  it.effect("redirects requestBody callers to the accepted body argument", () =>
+    Effect.scoped(
+      Effect.gen(function* () {
+        const server = yield* servePluginTestApi();
+        const executor = yield* createExecutor(makeTestConfig({ plugins: testPlugins() }));
+
+        const conn = yield* addOpenApiTestConnection(executor, server, { slug: "test" });
+        const calls = { count: 0 };
+        const failure = yield* executor
+          .execute(
+            conn.address("items.createItem"),
+            { requestBody: { name: "New item" } },
+            {
+              onElicitation: () =>
+                Effect.sync(() => {
+                  calls.count++;
+                  return { action: "accept" as const, content: {} };
+                }),
+            },
+          )
+          .pipe(Effect.flip);
+
+        expect(calls.count).toBe(0);
+        expect(Predicate.isTagged(failure, "ToolInvocationError")).toBe(true);
+        // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: asserts the exact caller-facing message the pre-flight failure carries
+        const message = (failure as { message: string }).message;
+        expect(message).toContain('Unknown argument "requestBody".');
+        expect(message).toContain("This operation accepts:");
+        expect(message).toContain("body");
+      }),
+    ),
+  );
+
   it.effect("describes OpenAPI invocation results payload-first with http meta beside data", () =>
     Effect.scoped(
       Effect.gen(function* () {
@@ -657,6 +724,64 @@ describe("OpenAPI Plugin", () => {
     ),
   );
 
+  it.effect("rejects unknown GET arguments locally", () =>
+    Effect.scoped(
+      Effect.gen(function* () {
+        const server = yield* servePluginTestApi();
+        const executor = yield* createExecutor(makeTestConfig({ plugins: testPlugins() }));
+
+        const conn = yield* addOpenApiTestConnection(executor, server, { slug: "test" });
+        const failure = yield* executor
+          .execute(conn.address("items.getItem"), {
+            itemId: "2",
+            doesNotExist: "nope",
+          })
+          .pipe(Effect.flip);
+
+        expect(Predicate.isTagged(failure, "ToolInvocationError")).toBe(true);
+        // oxlint-disable-next-line executor/no-unknown-error-message -- boundary: asserts the exact caller-facing message the pre-flight failure carries
+        const message = (failure as { message: string }).message;
+        expect(message).toContain('Unknown argument "doesNotExist".');
+        expect(message).toContain("This operation accepts:");
+        expect(message).toContain("itemId");
+      }),
+    ),
+  );
+
+  it.effect("accepts the server selector for multi-server operations", () =>
+    Effect.scoped(
+      Effect.gen(function* () {
+        const server = yield* servePluginTestApi();
+        const executor = yield* createExecutor(makeTestConfig({ plugins: testPlugins() }));
+        const multiServer = {
+          ...server,
+          specJson: makeOpenApiTestSpecJson(TestApi, {
+            transformSpec: (spec) => ({
+              ...spec,
+              servers: [{ url: "https://unused.example" }, { url: server.baseUrl }],
+            }),
+          }),
+        };
+
+        const conn = yield* addOpenApiTestConnection(
+          executor,
+          multiServer,
+          { slug: "multi_server", baseUrl: null },
+          { value: "token" },
+        );
+        const result = unwrapInvocation(
+          yield* executor.execute(conn.address("items.getItem"), {
+            itemId: "2",
+            server: { url: server.baseUrl },
+          }),
+        );
+
+        expect(result.error).toBeNull();
+        expect(result.data).toEqual({ id: 2, name: "Gadget" });
+      }),
+    ),
+  );
+
   it.effect("surfaces structured validation errors from OpenAPI tool calls", () =>
     Effect.scoped(
       Effect.gen(function* () {
@@ -668,9 +793,6 @@ describe("OpenAPI Plugin", () => {
         const result = unwrapInvocation(
           yield* executor.execute(conn.address("items.queryRows"), {
             entryTypeId: "18538",
-            query: JSON.stringify([{ DisplayName: "Example" }]),
-            limit: 10,
-            skip: 0,
           }),
         );
 
