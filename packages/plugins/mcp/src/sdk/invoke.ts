@@ -30,7 +30,7 @@ import {
 
 import { McpConnectionError, McpInvocationError, McpOAuthReauthorizationRequired } from "./errors";
 import type { McpConnection, McpConnector } from "./connection";
-import { httpStatusFromCause } from "./http-status";
+import { httpStatusFromCause, insufficientScopeFromCause } from "./http-status";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -178,6 +178,9 @@ const useConnection = (
           message: `MCP tool call failed for ${toolName}`,
           ...(status === undefined ? {} : { status }),
           ...(isUnknownToolCause(cause, toolName) ? { unknownTool: true } : {}),
+          ...(status === 403 && insufficientScopeFromCause(cause)
+            ? { insufficientScope: true }
+            : {}),
         });
       },
     }).pipe(

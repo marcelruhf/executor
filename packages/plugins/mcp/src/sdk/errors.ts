@@ -37,6 +37,11 @@ export class McpInvocationError extends Data.TaggedError("McpInvocationError")<{
   /** The server rejected the call as an unknown tool (protocol error), which
    *  means the persisted catalog has drifted from the server's live tool set. */
   readonly unknownTool?: boolean;
+  /** A 403 whose body named a scope shortfall (RFC 6750 insufficient_scope /
+   *  Google's ACCESS_TOKEN_SCOPE_INSUFFICIENT): re-authenticating the same
+   *  grant cannot fix it, so the failure must not be labelled
+   *  connection_rejected. */
+  readonly insufficientScope?: boolean;
 }> {}
 
 export class McpOAuthReauthorizationRequired extends Data.TaggedError(

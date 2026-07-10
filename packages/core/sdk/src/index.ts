@@ -407,3 +407,4 @@ export {
   type AuthToolFailureCode,
   type AuthToolFailureInput,
 } from "./auth-tool-failure";
+export { detectInsufficientScope, type InsufficientScopeDetection } from "./insufficient-scope";

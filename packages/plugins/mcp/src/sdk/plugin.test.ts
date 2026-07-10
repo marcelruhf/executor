@@ -643,6 +643,58 @@ describe("mcpPlugin", () => {
     );
   }
 
+  it.effect(
+    "classifies a scope-insufficient 403 as oauth_scope_insufficient, not connection_rejected",
+    () =>
+      Effect.scoped(
+        Effect.gen(function* () {
+          const slug = "call_status_scope";
+          const { executor, toolAddress } = yield* seedCallToolExecutor({
+            slug,
+            // RFC 6750 insufficient_scope in the response body: re-running the
+            // same grant cannot fix this, so the failure must not carry the
+            // re-authenticate recovery (whose oauth.start hint would loop).
+            callTool: () =>
+              HttpServerResponse.text(
+                '{"error":"insufficient_scope","error_description":"do-not-leak: needs files.read"}',
+                { status: 403 },
+              ),
+          });
+
+          const result = yield* executor.execute(toolAddress, {}, { onElicitation: "accept-all" });
+
+          expect(result).toMatchObject({
+            ok: false,
+            error: {
+              code: "oauth_scope_insufficient",
+              status: 403,
+              retryable: false,
+              details: {
+                category: "authentication",
+                integration: { id: slug },
+                credential: { kind: "oauth", label: "main" },
+                upstream: { status: 403 },
+              },
+            },
+          });
+
+          const failure = result as {
+            readonly ok: false;
+            readonly error: {
+              readonly message: string;
+              readonly details: { readonly recovery: Record<string, string> };
+            };
+          };
+          expect(failure.error.message).not.toContain("do-not-leak");
+          expect(
+            failure.error.details.recovery.startOAuthTool,
+            "no oauth.start hint: re-running the identical grant cannot satisfy the scope",
+          ).toBeUndefined();
+          expect(failure.error.details.recovery.scopeInstructions).toBeDefined();
+        }),
+      ),
+  );
+
   it.effect("does not classify non-auth tools/call HTTP failures as auth failures", () =>
     Effect.scoped(
       Effect.gen(function* () {

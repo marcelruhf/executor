@@ -34,3 +34,16 @@ const statusFromStreamableHttpError = (cause: unknown): number | undefined => {
 
 export const httpStatusFromCause = (cause: unknown): number | undefined =>
   statusFromStreamableHttpError(cause) ?? statusFromSsePostError(cause);
+
+// The SDK embeds the upstream response text in the transport error message
+// ("Error POSTing to endpoint: <body>"), which is the only place a 403's body
+// survives. A scope-insufficient rejection (RFC 6750 insufficient_scope,
+// Google's ACCESS_TOKEN_SCOPE_INSUFFICIENT) is detected there so the failure
+// can carry a code that tells the agent re-authenticating the same grant will
+// not help. Containment check only; a miss stays on the generic auth path.
+export const insufficientScopeFromCause = (cause: unknown): boolean =>
+  Option.match(decodeSsePostErrorCause(cause), {
+    onNone: () => false,
+    onSome: ({ message }) =>
+      message.includes("insufficient_scope") || message.includes("ACCESS_TOKEN_SCOPE_INSUFFICIENT"),
+  });

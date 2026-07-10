@@ -4,6 +4,7 @@ import { HttpClient } from "effect/unstable/http";
 
 import {
   authToolFailure,
+  detectInsufficientScope,
   AuthTemplateSlug,
   definePlugin,
   IntegrationAlreadyExistsError,
@@ -1145,6 +1146,29 @@ export const graphqlPlugin = definePlugin((options?: GraphqlPluginOptions) => {
         }
         if (result.status < 200 || result.status >= 300) {
           if (result.status === 401 || result.status === 403) {
+            // A scope-insufficient 403 is not fixable by re-authenticating
+            // the same grant; give it its own code so the agent stops looping
+            // through identical consent flows.
+            const insufficientScope =
+              result.status === 403
+                ? detectInsufficientScope({ body: { data: result.data, errors: result.errors } })
+                : null;
+            if (insufficientScope) {
+              return authToolFailure({
+                code: "oauth_scope_insufficient",
+                status: result.status,
+                message: `The connection for GraphQL integration "${integration}" is authorized, but its grant does not cover the scope this operation requires. Re-authenticating with the same grant will return the same error; reconnect with broader access.`,
+                integration: { id: integration, scope: credential.owner },
+                credential: { kind: "oauth", label: "Upstream authorization" },
+                upstream: {
+                  status: result.status,
+                  details: {
+                    data: result.data,
+                    errors: result.errors,
+                  },
+                },
+              });
+            }
             return authToolFailure({
               code: "connection_rejected",
               status: result.status,
