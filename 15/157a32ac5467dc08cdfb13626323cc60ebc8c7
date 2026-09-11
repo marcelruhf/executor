@@ -1,0 +1,33 @@
+apps/host-selfhost/.env.example
+  s_70806d0ba91f1c::t_8e96e974682cfd 39-40
+apps/host-selfhost/src/config.ts
+  s_70806d0ba91f1c::t_215dcf0fd721f5 90-91
+packages/core/sdk/src/executor.ts
+  s_70806d0ba91f1c::t_400e18dc1cf83f 766-768
+packages/core/sdk/src/integration.ts
+  s_70806d0ba91f1c::t_31c28369a8fc0c 64-67
+packages/core/sdk/src/oauth-client.ts
+  s_70806d0ba91f1c::t_253c349de3d4f2 400-402
+packages/core/sdk/src/oauth-service.ts
+  s_70806d0ba91f1c::t_ffa2ac97ad07d3 292-293
+packages/react/src/components/add-account-modal.tsx
+  s_70806d0ba91f1c::t_b8c87770d8159d 828,959
+packages/react/src/lib/auth-placements.tsx
+  s_70806d0ba91f1c::t_6bf318da928489 88-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "15157a32ac5467dc08cdfb13626323cc60ebc8c7",
+  "prompts": {},
+  "sessions": {
+    "s_70806d0ba91f1c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5f245b9f-5a36-4150-82a3-fb70df50355e",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
