@@ -1,0 +1,49 @@
+apps/docs/hosted/docker.mdx
+  s_5211ecabbcfc93::t_d21476d663c1d5 56-71
+  s_5211ecabbcfc93::t_a3bff673a3bd2c 72
+packages/core/api/src/server/scoped-executor.ts
+  s_5211ecabbcfc93::t_211e23c89294ee 118
+  s_5211ecabbcfc93::t_1be5023243d933 119-124
+  s_5211ecabbcfc93::t_0c7fcbea1f0c94 337
+apps/host-selfhost/src/execution.ts
+  s_5211ecabbcfc93::t_1605784958db6f 59
+apps/host-selfhost/src/executor-config.test.ts
+  s_5211ecabbcfc93::t_3b4c1b5ae97c9e 122-141
+  s_5211ecabbcfc93::t_5d78d171198be0 9,13
+  s_5211ecabbcfc93::t_4c1f894c25699b 35-39
+apps/host-selfhost/.env.example
+  s_5211ecabbcfc93::t_10cb97697881dc 39-40,43-44
+  s_668a0eed8b2f4a::t_bb04f4989eb1dd 41-42
+apps/host-selfhost/src/oauth-cimd-capability.test.ts
+  s_5211ecabbcfc93::t_77778ad10a9e6d 66-72
+  s_5211ecabbcfc93::t_f8706ae04d4141 1-65,73-76
+apps/host-selfhost/src/config.ts
+  s_5211ecabbcfc93::t_19ecd13f5446d7 89-95
+  s_5211ecabbcfc93::t_9fd65b3379cbe6 207
+  s_668a0eed8b2f4a::t_fdf2cbc7961b9c 267-268
+  s_5211ecabbcfc93::t_39b1567694f6f9 269-280
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "0f05ccca145e9774fa98f162541ab40a64230535",
+  "prompts": {},
+  "sessions": {
+    "s_5211ecabbcfc93": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6c1957c8-f0b8-4f10-a747-bd0e979ae3b5",
+        "model": "cursor-grok-4.6-xhigh-fast"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    },
+    "s_668a0eed8b2f4a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "05ac464a-3d8c-468d-bb7c-227b3c2ee165",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": null
+    }
+  }
+}
