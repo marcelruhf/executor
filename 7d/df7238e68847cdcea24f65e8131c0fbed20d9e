@@ -1,0 +1,16 @@
+packages/plugins/openapi/src/sdk/plugin.test.ts
+  h_ab246cd86834fa 457-502
+packages/plugins/openapi/src/sdk/plugin.ts
+  h_ab246cd86834fa 1200-1222
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7ddf7238e68847cdcea24f65e8131c0fbed20d9e",
+  "prompts": {},
+  "humans": {
+    "h_ab246cd86834fa": {
+      "author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
