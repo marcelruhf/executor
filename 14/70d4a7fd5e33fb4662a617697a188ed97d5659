@@ -1,0 +1,39 @@
+packages/core/sdk/src/executor.ts
+  s_5211ecabbcfc93::t_180bbb639aa0d7 6667
+  s_5211ecabbcfc93::t_f5569e20ec4b90 3121-3128
+  s_5211ecabbcfc93::t_527e9267ed06e3 761-769
+  s_5211ecabbcfc93::t_fbde3660ec6852 1898
+  s_668a0eed8b2f4a::t_2243965f0cf561 760
+packages/core/sdk/src/oauth-service.ts
+  s_5211ecabbcfc93::t_67509f78ebfb0b 292-297
+  s_5211ecabbcfc93::t_fe8cde69984f57 2496
+packages/core/sdk/src/test-config.ts
+  s_5211ecabbcfc93::t_deb9f5e1df57ad 184
+  s_5211ecabbcfc93::t_8d3225c0fc1a41 136
+packages/core/sdk/src/oauth-cimd-capability.test.ts
+  s_5211ecabbcfc93::t_9dd03cc6c2805b 1-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "1470d4a7fd5e33fb4662a617697a188ed97d5659",
+  "prompts": {},
+  "sessions": {
+    "s_5211ecabbcfc93": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6c1957c8-f0b8-4f10-a747-bd0e979ae3b5",
+        "model": "cursor-grok-4.6-xhigh-fast"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    },
+    "s_668a0eed8b2f4a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "05ac464a-3d8c-468d-bb7c-227b3c2ee165",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
