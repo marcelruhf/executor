@@ -1,0 +1,74 @@
+apps/host-selfhost/src/executor-config.test.ts
+  s_668a0eed8b2f4a::t_cff293be0c0e77 125,128-130,133-135,139-140
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 13,35-39,122-124,126-127,131-132,136-138
+  s_5211ecabbcfc93::t_3b4c1b5ae97c9e 141
+  s_668a0eed8b2f4a::t_0380dd69978f76 9
+packages/core/sdk/src/oauth-service.ts
+  s_359479a94abbab::t_6e308f928457dc 292-294
+  s_668a0eed8b2f4a::t_41f08b6cde8101 295,2494
+apps/host-selfhost/src/oauth-cimd-capability.test.ts
+  s_5211ecabbcfc93::t_77778ad10a9e6d 51-57
+  s_5211ecabbcfc93::t_f8706ae04d4141 1-9,12,15-31,33-50,58-61
+  s_359479a94abbab::t_abf61bbd3b9172 10-11,13-14,32
+packages/core/api/src/server/scoped-executor.ts
+  s_359479a94abbab::t_abf61bbd3b9172 120
+  s_5211ecabbcfc93::t_211e23c89294ee 118
+  s_359479a94abbab::t_b22caf2aceae52 119,122,335
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 121
+apps/host-selfhost/.env.example
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 39-42,44
+  s_668a0eed8b2f4a::t_53116559eec1e8 43
+apps/host-selfhost/src/execution.ts
+  s_359479a94abbab::t_b22caf2aceae52 59
+apps/docs/hosted/docker.mdx
+  s_668a0eed8b2f4a::t_91828699dee2d1 72
+packages/core/sdk/src/executor.ts
+  s_668a0eed8b2f4a::t_48a50488efb0ba 760-768,6666
+  s_359479a94abbab::t_9f00a3fbf2898d 3091-3092,3125
+  s_359479a94abbab::t_b22caf2aceae52 769,1898
+  s_359479a94abbab::t_d0045d24542636 3090,3093-3095
+apps/host-selfhost/src/config.ts
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 89-94,271
+  s_668a0eed8b2f4a::t_2cf7d88ea7c761 207
+  s_5211ecabbcfc93::t_39b1567694f6f9 273-274
+  s_668a0eed8b2f4a::t_bd100d378a8312 95
+  s_668a0eed8b2f4a::t_bbf3a43146b775 267-270,272
+packages/core/sdk/src/oauth-cimd-capability.test.ts
+  s_668a0eed8b2f4a::t_5c699fad6526d8 1-64,66-103,105-117,119-125
+  s_359479a94abbab::t_f23168fd1e38cf 118
+  s_359479a94abbab::t_b22caf2aceae52 65,104
+packages/core/sdk/src/test-config.ts
+  s_359479a94abbab::t_b22caf2aceae52 136,184
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e1c6553b87933fd6458e274e856548e496223073",
+  "prompts": {},
+  "sessions": {
+    "s_359479a94abbab": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d1c1f6f4-4787-4047-b844-15b59ec3a3f6",
+        "model": "claude-opus-5"
+      },
+      "human_author": null
+    },
+    "s_5211ecabbcfc93": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6c1957c8-f0b8-4f10-a747-bd0e979ae3b5",
+        "model": "cursor-grok-4.6-xhigh-fast"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    },
+    "s_668a0eed8b2f4a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "05ac464a-3d8c-468d-bb7c-227b3c2ee165",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": null
+    }
+  }
+}
