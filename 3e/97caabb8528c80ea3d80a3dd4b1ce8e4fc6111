@@ -1,0 +1,16 @@
+apps/host-selfhost/src/config.ts
+  h_ab246cd86834fa 268-269
+apps/host-selfhost/src/executor-config.test.ts
+  h_ab246cd86834fa 133-134,138-146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "3e97caabb8528c80ea3d80a3dd4b1ce8e4fc6111",
+  "prompts": {},
+  "humans": {
+    "h_ab246cd86834fa": {
+      "author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
