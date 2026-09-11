@@ -1,0 +1,59 @@
+apps/host-selfhost/src/executor-config.test.ts
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 13,35-39,122-124,126-127,131-132,136-138
+  s_668a0eed8b2f4a::t_cff293be0c0e77 125,128-130,133-135,139-140
+  s_5211ecabbcfc93::t_3b4c1b5ae97c9e 141
+  s_668a0eed8b2f4a::t_0380dd69978f76 9
+apps/host-selfhost/.env.example
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 39-42,44
+  s_668a0eed8b2f4a::t_53116559eec1e8 43
+apps/host-selfhost/src/oauth-cimd-capability.test.ts
+  s_5211ecabbcfc93::t_77778ad10a9e6d 66-72
+  s_668a0eed8b2f4a::t_f0b7e66cec19c8 16
+  s_5211ecabbcfc93::t_f8706ae04d4141 1-9,11-15,17-65,73-76
+  s_668a0eed8b2f4a::t_98a6a610c06ea0 10
+apps/docs/hosted/docker.mdx
+  s_668a0eed8b2f4a::t_91828699dee2d1 72
+packages/core/api/src/server/scoped-executor.ts
+  s_5211ecabbcfc93::t_211e23c89294ee 118
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 119-124,337
+apps/host-selfhost/src/config.ts
+  s_668a0eed8b2f4a::t_bbf3a43146b775 267-270,272
+  s_668a0eed8b2f4a::t_bd100d378a8312 95
+  s_5211ecabbcfc93::t_39b1567694f6f9 273-274
+  s_668a0eed8b2f4a::t_2cf7d88ea7c761 207
+  s_668a0eed8b2f4a::t_120b43e50d7ba0 89-94,271
+apps/host-selfhost/src/execution.ts
+  s_668a0eed8b2f4a::t_5e9cb37abcf0a2 59
+packages/core/sdk/src/executor.ts
+  s_668a0eed8b2f4a::t_48a50488efb0ba 760-769,1898,3121-3128,6667
+packages/core/sdk/src/oauth-cimd-capability.test.ts
+  s_668a0eed8b2f4a::t_5c699fad6526d8 1-124
+packages/core/sdk/src/oauth-service.ts
+  s_668a0eed8b2f4a::t_41f08b6cde8101 292,2491
+packages/core/sdk/src/test-config.ts
+  s_668a0eed8b2f4a::t_af6107be0097f8 136,184
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "bf1c8d97a0eb1d28b658267675d60f56d262f1f6",
+  "prompts": {},
+  "sessions": {
+    "s_5211ecabbcfc93": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6c1957c8-f0b8-4f10-a747-bd0e979ae3b5",
+        "model": "cursor-grok-4.6-xhigh-fast"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    },
+    "s_668a0eed8b2f4a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "05ac464a-3d8c-468d-bb7c-227b3c2ee165",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": null
+    }
+  }
+}
