@@ -1,0 +1,21 @@
+e2e/selfhost-docker/oauth-cimd-deployment.test.ts
+  s_15e1f7d3a6721a::t_6bd231c2b25d41 206
+packages/core/sdk/src/oauth-cimd-capability.test.ts
+  s_15e1f7d3a6721a::t_7977ccca7b5c00 43-52,54-59,61-68,70-81,83-87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "18336b925e46123fcd4d02abd5c707bb4e0f4b16",
+  "prompts": {},
+  "sessions": {
+    "s_15e1f7d3a6721a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a096bc-e5c4-7b90-a0a9-53408528e562",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
