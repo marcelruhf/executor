@@ -1,0 +1,78 @@
+e2e/setup/selfhost-docker.boot.ts
+  s_15e1f7d3a6721a::t_a8d5c65ba3807d 77-79,115-117
+  s_15e1f7d3a6721a::t_84c3e4ea629770 97
+  s_15e1f7d3a6721a::t_17779d9e79c4a1 96,98
+packages/plugins/openapi/src/react/auth-method-config.test.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 23,36,41-54,99,108,117
+packages/plugins/openapi/src/sdk/config.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 41
+packages/plugins/openapi/src/api/group.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 74
+packages/plugins/openapi/src/sdk/plugin.ts
+  s_15e1f7d3a6721a::t_1c16f271eedd79 865-872
+  s_15e1f7d3a6721a::t_55d20ca5a27246 199-200,273,309,440,551,592,628-629,631,807,1208,1210
+  s_15e1f7d3a6721a::t_adb39097293a18 626-627,630,1205-1207,1209,1211
+packages/core/sdk/src/oauth-client.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 121
+  s_15e1f7d3a6721a::t_f4b00d1d1adccf 120
+packages/react/src/components/add-account-modal.tsx
+  s_15e1f7d3a6721a::t_55d20ca5a27246 1756-1757,2525-2528,2530
+  s_15e1f7d3a6721a::t_21b0076e9c5506 1754-1755,2529
+e2e/RUNNING.md
+  s_15e1f7d3a6721a::t_68bdd818eea9b0 172-196
+  s_15e1f7d3a6721a::t_34902884cfec41 197-203
+e2e/vitest.config.ts
+  s_15e1f7d3a6721a::t_597c84ddb12be1 41-46
+  s_15e1f7d3a6721a::t_f8c82b1b2c4b14 47-48
+packages/plugins/openapi/src/react/auth-method-config.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 52,93,111
+  s_15e1f7d3a6721a::t_c344171fc66ad7 47-51
+packages/core/sdk/src/plugin.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 655
+  s_15e1f7d3a6721a::t_5005dfaaa71dc0 654
+e2e/selfhost-docker/oauth-cimd-deployment.test.ts
+  s_15e1f7d3a6721a::t_d3ca90df02a763 54,159,168,221
+  s_15e1f7d3a6721a::t_2c3460cfe68e66 83-95,213-217,219
+  s_15e1f7d3a6721a::t_d5fca46795386b 197,201
+  s_15e1f7d3a6721a::t_3076d487d61395 261-264,280,300,326
+  s_15e1f7d3a6721a::t_17779d9e79c4a1 27-28,33-36,46-53,58,67-70,72-73,76-82,96-99,101-125,127-135,143-157,160-165,170-172,175-196,198-200,202-206,210-212,218,220,222-243,246-258,265-269,273-279,281-299,301-325
+  s_15e1f7d3a6721a::t_34902884cfec41 55-57,71,74-75,270-272
+  s_15e1f7d3a6721a::t_476d902e8a1151 158,166-167,169
+  s_15e1f7d3a6721a::t_d3552cac06943e 244-245
+  s_15e1f7d3a6721a::t_aa4528fe78431c 136-142
+  s_15e1f7d3a6721a::t_68bdd818eea9b0 59-66
+  s_15e1f7d3a6721a::t_ebae91c6178a69 1-26,29-32,37-45,100,126,173-174,207-209,259-260
+packages/plugins/openapi/src/sdk/derive-auth.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 154
+packages/plugins/openapi/src/sdk/preview.ts
+  s_15e1f7d3a6721a::t_55d20ca5a27246 161
+  s_15e1f7d3a6721a::t_68ffa1f9b7adac 160
+packages/react/src/components/auth-template-editor.tsx
+  s_15e1f7d3a6721a::t_55d20ca5a27246 43
+  s_15e1f7d3a6721a::t_0a7cda25c1a928 42
+packages/plugins/openapi/src/sdk/plugin.test.ts
+  s_15e1f7d3a6721a::t_90e1ffe8c42459 449
+  s_15e1f7d3a6721a::t_ff281f9880b928 476,497
+  s_15e1f7d3a6721a::t_55d20ca5a27246 423,439,456,470,485-489,491,499-500,502
+  s_15e1f7d3a6721a::t_80bd62e69d3313 490,501
+e2e/tsconfig.json
+  s_15e1f7d3a6721a::t_4db85eff66e386 13-23
+packages/plugins/openapi/src/sdk/describe-auth-methods.test.ts
+  s_15e1f7d3a6721a::t_35852a37ab081a 80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "22225c26072bb84151cfbd60bd53bfcabd08278f",
+  "prompts": {},
+  "sessions": {
+    "s_15e1f7d3a6721a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a096bc-e5c4-7b90-a0a9-53408528e562",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
