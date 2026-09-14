@@ -1,0 +1,95 @@
+name: Publish CIMD branch test image
+on:
+  push:
+    branches: [build/cimd-test-image]
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: publish-cimd-test-image
+  cancel-in-progress: false
+env:
+  IMAGE: ghcr.io/marcelruhf/executor-selfhost
+  IMAGE_TAG: cimd-66b439acf
+  SOURCE_SHA: 66b439acfd7e68b6b5d2730363fec6f340e52e11
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/host-selfhost/Dockerfile
+          platforms: linux/${{ matrix.arch }}
+          load: true
+          tags: ${{ env.IMAGE }}:${{ env.IMAGE_TAG }}-${{ matrix.arch }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/marcelruhf/executor
+            org.opencontainers.image.revision=${{ env.SOURCE_SHA }}
+            org.opencontainers.image.version=${{ env.IMAGE_TAG }}
+      - name: Smoke test disabled and default CIMD configurations
+        env:
+          ARCH: ${{ matrix.arch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker logs cimd-smoke 2>/dev/null || true; docker rm -f -v cimd-smoke 2>/dev/null || true' EXIT
+          for mode in disabled default; do
+            args=()
+            if [ "$mode" = disabled ]; then args=(-e EXECUTOR_OAUTH_CIMD_ENABLED=false); fi
+            docker run -d --name cimd-smoke --tmpfs /data \
+              -e DO_NOT_TRACK=1 -e EXECUTOR_DISABLE_ANALYTICS=1 \
+              -e EXECUTOR_DISABLE_INTEGRATIONS_FETCH=1 \
+              "${args[@]}" "$IMAGE:$IMAGE_TAG-$ARCH"
+            healthy=false
+            for attempt in $(seq 1 60); do
+              if docker exec cimd-smoke bun -e "fetch('http://127.0.0.1:4788/api/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"; then
+                healthy=true
+                break
+              fi
+              sleep 2
+            done
+            docker logs cimd-smoke
+            test "$healthy" = true
+            docker rm -f -v cimd-smoke
+          done
+      - name: Push tested image
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: docker push "$IMAGE:$IMAGE_TAG-$ARCH"
+  manifest:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish multi-platform tags
+        run: |
+          docker buildx imagetools create \
+            -t "$IMAGE:$IMAGE_TAG" -t "$IMAGE:cimd-branch" \
+            "$IMAGE:$IMAGE_TAG-amd64" "$IMAGE:$IMAGE_TAG-arm64"
+          docker buildx imagetools inspect "$IMAGE:$IMAGE_TAG"
