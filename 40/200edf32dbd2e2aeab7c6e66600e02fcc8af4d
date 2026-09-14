@@ -1,0 +1,19 @@
+.changeset/selfhost-cimd-dcr-fallback.md
+  s_15e1f7d3a6721a::t_2072ae106dbdd6 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "40200edf32dbd2e2aeab7c6e66600e02fcc8af4d",
+  "prompts": {},
+  "sessions": {
+    "s_15e1f7d3a6721a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a096bc-e5c4-7b90-a0a9-53408528e562",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Marcel Ruhf <2291256+marcelruhf@users.noreply.github.com>"
+    }
+  }
+}
