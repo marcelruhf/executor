@@ -20,7 +20,7 @@ docker run -d \
   -p 4788:4788 \
   -v executor-data:/data \
   -e OTEL_EXPORTER_OTLP_ENDPOINT=http://collector.local:4318 \
-  ghcr.io/usefulsoftwareco/executor-selfhost:latest
+  ghcr.io/marcelruhf/executor-selfhost:latest
 ```
 
 Traces are sent as OTLP over HTTP with a JSON payload, which every collector
@@ -79,7 +79,7 @@ docker run -d \
   -v executor-data:/data \
   --add-host host.docker.internal:host-gateway \
   -e OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:27686 \
-  ghcr.io/usefulsoftwareco/executor-selfhost:latest
+  ghcr.io/marcelruhf/executor-selfhost:latest
 ```
 
 <Warning>

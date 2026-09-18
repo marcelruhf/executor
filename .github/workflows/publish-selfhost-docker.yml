@@ -37,7 +37,6 @@ jobs:
       release_tag: ${{ steps.validate.outputs.tag }}
       image: ${{ steps.image.outputs.image }}
       tags: ${{ steps.image.outputs.tags }}
-      legacy_tags: ${{ steps.image.outputs.legacy_tags }}
       labels: ${{ steps.image.outputs.labels }}
 
     steps:
@@ -75,7 +74,6 @@ jobs:
           version="${RELEASE_TAG#v}"
           owner="$(printf '%s' "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
           image="ghcr.io/${owner}/executor-selfhost"
-          legacy_image="ghcr.io/rhyssullivan/executor-selfhost"
           revision="$(git rev-parse HEAD)"
 
           if [[ "$version" == *-* ]]; then
@@ -92,11 +90,6 @@ jobs:
             echo "${image}:${RELEASE_TAG}"
             echo "${image}:${version}"
             echo "${image}:${channel}"
-            echo "TAGS"
-            echo "legacy_tags<<TAGS"
-            echo "${legacy_image}:${RELEASE_TAG}"
-            echo "${legacy_image}:${version}"
-            echo "${legacy_image}:${channel}"
             echo "TAGS"
             echo "labels<<LABELS"
             echo "org.opencontainers.image.title=Executor self-host"
@@ -338,50 +331,3 @@ jobs:
           done <<< "$TAGS"
 
           docker buildx imagetools create "${tag_args[@]}" "${sources[@]}"
-
-  # Mirrors each release to the pre-org-move namespace
-  # (ghcr.io/rhyssullivan/executor-selfhost), which GHCR cannot redirect.
-  # Deliberately a separate job: the canonical publish above never depends on
-  # it, and a failure here (an expired GHCR_LEGACY_TOKEN, historically) shows
-  # as one red job pointing at exactly what to fix.
-  mirror-legacy:
-    needs:
-      - metadata
-      - merge
-    runs-on: blacksmith-4vcpu-ubuntu-2404
-    env:
-      HAS_LEGACY_TOKEN: ${{ secrets.GHCR_LEGACY_TOKEN != '' }}
-
-    steps:
-      - name: Skip legacy GHCR mirror (GHCR_LEGACY_TOKEN not configured)
-        if: env.HAS_LEGACY_TOKEN != 'true'
-        run: echo "GHCR_LEGACY_TOKEN is not configured; skipping legacy GHCR mirror."
-
-      - name: Set up Docker Buildx
-        if: env.HAS_LEGACY_TOKEN == 'true'
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to legacy GHCR namespace
-        if: env.HAS_LEGACY_TOKEN == 'true'
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: rhyssullivan
-          password: ${{ secrets.GHCR_LEGACY_TOKEN }}
-
-      - name: Mirror release tags to the legacy namespace
-        if: env.HAS_LEGACY_TOKEN == 'true'
-        shell: bash
-        env:
-          SOURCE_IMAGE: ${{ needs.metadata.outputs.image }}:${{ needs.metadata.outputs.release_tag }}
-          LEGACY_TAGS: ${{ needs.metadata.outputs.legacy_tags }}
-        run: |
-          set -euo pipefail
-
-          tag_args=()
-          while IFS= read -r tag; do
-            [[ -n "$tag" ]] || continue
-            tag_args+=("-t" "$tag")
-          done <<< "$LEGACY_TAGS"
-
-          docker buildx imagetools create "${tag_args[@]}" "$SOURCE_IMAGE"
