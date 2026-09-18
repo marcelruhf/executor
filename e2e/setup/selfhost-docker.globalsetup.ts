@@ -1,7 +1,7 @@
 // Boot the selfhost-docker target: claim a port, then build + run the
 // production image (selfhost-docker.boot.ts). Set E2E_SELFHOST_DOCKER_URL to
 // attach to a running instance, or E2E_SELFHOST_DOCKER_IMAGE to test a
-// published image (e.g. ghcr.io/<owner>/executor:latest) instead of
+// published image (e.g. ghcr.io/<owner>/executor-selfhost:latest) instead of
 // building from this checkout.
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
