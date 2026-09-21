@@ -1,5 +1,21 @@
 # executor
 
+## 1.6.11
+
+### Patch Changes
+
+- [#2066](https://github.com/UsefulSoftwareCo/executor/pull/2066) [`c6d1083`](https://github.com/UsefulSoftwareCo/executor/commit/c6d10838f741ece700922fb2469782f79753b7f7) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Prefer browser sign-in when a matching OAuth client is available, while preserving a user’s chosen method when clients finish loading.
+
+- [#2050](https://github.com/UsefulSoftwareCo/executor/pull/2050) [`24adb12`](https://github.com/UsefulSoftwareCo/executor/commit/24adb127f304e2b145b462c3805a9e11b2a524e0) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - Accept Slack bot and user OAuth token envelopes during sign-in and token refresh.
+
+- [`40200ed`](https://github.com/UsefulSoftwareCo/executor/commit/40200edf32dbd2e2aeab7c6e66600e02fcc8af4d) Thanks [@marcelruhf](https://github.com/marcelruhf)! - Allow self-hosted deployments whose CIMD document is unreachable by OAuth servers to use DCR for automatic MCP and discovered OpenAPI connections with `EXECUTOR_OAUTH_CIMD_ENABLED=false`. Unsetting the variable restores CIMD for new connections without rewriting integration settings, including legacy OpenAPI templates.
+
+- Updated dependencies [[`2e5aa16`](https://github.com/UsefulSoftwareCo/executor/commit/2e5aa16bedb4ba74448b3f9338754764b40519a0), [`4a08d8d`](https://github.com/UsefulSoftwareCo/executor/commit/4a08d8db6f74612e07f17494e222ff038d8af944)]:
+  - @executor-js/sdk@1.6.11
+  - @executor-js/local@1.6.11
+  - @executor-js/api@1.4.74
+  - @executor-js/runtime-quickjs@1.6.11
+
 ## 1.6.10
 
 ### Patch Changes
